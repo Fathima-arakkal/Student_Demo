@@ -1,0 +1,57 @@
+﻿@model IEnumerable<IGrouping<string, Student_Demo.Models.Location>>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    .button {
+        background-color: #00BFFF;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .create-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #00BFFF;
+        color: #FFFFFF;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        border: 1px solid #00BFFF;
+        border-radius: 5px;
+    }
+</style>
+
+<h2>Locations</h2>
+
+<p>
+    <a asp-action="Create" class="create-button">Create New</a>
+    <div>
+        <a href="@Url.Action("Index", "Students")" class="button">Students</a>
+        <a href="@Url.Action("Index", "Departments")" class="button">Departments</a>
+    </div>
+</p>
+
+@foreach (var locationGroup in Model)
+{
+    <h4>Location name: @locationGroup.Key</h4>
+
+    @foreach (var location in locationGroup)
+    {
+        <p>
+           @*  <strong>Location Name:</strong> @location.Name <br /> *@
+            <a asp-action="Edit" asp-route-id="@location.LocationId">Edit</a> |
+            <a asp-action="Details" asp-route-id="@location.LocationId">Details</a> |
+            <a asp-action="Delete" asp-route-id="@location.LocationId">Delete</a>
+        </p>
+    }
+}

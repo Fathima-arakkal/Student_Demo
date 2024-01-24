@@ -1,0 +1,98 @@
+﻿@model IEnumerable<IGrouping<Student_Demo.Models.Location, Student_Demo.Models.Department>>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    .button {
+        background-color: #00BFFF;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .create-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #00BFFF;
+        color: #FFFFFF;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        border: 1px solid #00BFFF;
+        border-radius: 5px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<h2>Departments</h2>
+
+<p>
+    <a asp-action="Create" class="create-button">Create New</a>
+    <div>
+        <a href="@Url.Action("Index", "Students")" class="button">Students</a>
+        <a href="@Url.Action("Index", "Locations")" class="button">Locations</a>
+    </div>
+</p>
+
+@foreach (var locationGroup in Model)
+{
+    <h4>Location name: @locationGroup.Key.Name</h4>
+   
+    @foreach (var department in locationGroup)
+    {
+        <h5>Department: @department.Name</h5>
+
+        @if (department.Students != null && department.Students.Any())
+        {
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Division</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in department.Students)
+                    {
+                        <tr>
+                            <td>@student.Name</td>
+                            <td>@student.Age</td>
+                            <td>@student.Gender</td>
+                            <td>@student.Division</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No students found for this department.</p>
+        }
+        <br />
+    }
+}

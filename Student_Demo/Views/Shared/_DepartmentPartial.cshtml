@@ -1,0 +1,59 @@
+﻿@model IEnumerable<IGrouping<Student_Demo.Models.Location, Student_Demo.Models.Department>>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+@foreach (var locationGroup in Model)
+{
+    <h4>Location name: @locationGroup.Key.Name</h4>
+
+    @foreach (var department in locationGroup)
+    {
+        <h5>Department: @department.Name</h5>
+
+        @if (department.Students != null && department.Students.Any())
+        {
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Division</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in department.Students)
+                    {
+                        <tr>
+                            <td>@student.Name</td>
+                            <td>@student.Age</td>
+                            <td>@student.Gender</td>
+                            <td>@student.Division</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No students found for this department.</p>
+        }
+        <br />
+    }
+}

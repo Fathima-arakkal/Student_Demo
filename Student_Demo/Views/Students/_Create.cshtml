@@ -1,0 +1,67 @@
+﻿@model Student_Demo.Models.Student
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="Create" id="createStudentForm">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Age" class="control-label"></label>
+                    <input asp-for="Age" class="form-control" />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Gender" class="control-label"></label>
+                    <select asp-for="Gender" class="form-control">
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
+                        <option value="2">Other</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Division" class="control-label"></label>
+                    <select asp-for="Division" class="form-control">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                    </select>
+                    <span asp-validation-for="Division" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DepartmentId" class="control-label"></label>
+                    <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.DepartmentId">
+                        <option value=>Select the Department</option>
+                        <option value="84D55F24-EF61-4151-81A0-14E393973845">Commerce</option>
+                        <option value="7335A809-C8A9-4E4C-AAC3-29AC1BD3C434">Social Work</option>
+                        <option value="39393670-1887-4203-92DA-194FB0540615">Psychology</option>
+                        <option value="ACBCD85A-278F-4B66-8217-3F27F1A92091">Library Science</option>
+                        <option value="D3C2F8FF-AF54-4373-8054-7FA6CC07A7A7">Physics</option>
+                        <option value="79824D28-6136-40C6-A299-94B7018329B7">Biology</option>
+                        <option value="6C5B4399-B5EA-4999-8F20-B052ED53A918">Computer Science</option>
+                        <option value="7E4B9987-2CB5-43F6-A6E5-CDC02DE4A692">Chemistry</option>
+                        <option value="90CDF609-E7B2-4D10-86DB-D26754ACAD36">Economics</option>
+                        <option value="0226E01E-9A9D-4080-A56F-EC7E3C94C69C">Mathematics</option>
+                    </select>
+                    <span asp-validation-for="DepartmentId" class="text-danger"></span>
+
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+               
+       

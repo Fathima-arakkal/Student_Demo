@@ -4,6 +4,38 @@
     ViewData["Title"] = "Index";
 }
 
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createModalLabel">Create Student</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Render the partial view for creating a student -->
+                @await Html.PartialAsync("_Create", new Student_Demo.Models.Student
+           {
+               Name = "",
+               DepartmentId = Guid.Empty,
+               Department = new Student_Demo.Models.Department
+               {
+                   Name = "",
+                   Location = new Student_Demo.Models.Location
+                   {
+                       Name = "",
+                       Students = new List<Student_Demo.Models.Student>()
+                   },
+                   Students = new List<Student_Demo.Models.Student>()
+               }
+           })
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <h2>Students Details</h2>
 <style>
     .button {
@@ -31,14 +63,16 @@
         border-radius: 5px;
     }
 </style>
+
 <p>
-    <a asp-action="Create" class="create-button">Create New</a>
+    <button type="button" class="create-button" id="openCreateModal">Create New</button>
 
     <div>
         <a href="@Url.Action("Index", "Departments")" class="button">Departments</a>
         <a href="@Url.Action("Index", "Locations")" class="button">Locations</a>
     </div>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -61,29 +95,61 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Division)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Department.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.StudentId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.StudentId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.StudentId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Division)
+                </td>
+                <td>
+                    @if (item.Department != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.Department.Name)
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.StudentId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.StudentId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.StudentId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+            crossorigin="anonymous"
+            integrity="sha384-pzjw8+ua/CkV58kEXo8INq6ZWoZU4xkL2s5YI9C1aXaDI6qDjQ2W0I4+Q8gBWWt">
+    </script>
+    <script src="~/js/createStudent.js"></script>
+
+    <script>
+        // Ensure the document is ready before binding events
+        $(document).ready(function () {
+            // Open the modal when the "Create New" button is clicked
+            $("body").on("click", "#openCreateModal", function () {
+                $("#createModal").modal("show");
+            });
+
+            // Close the modal when the "Close" button is clicked
+            $("body").on("click", "#closeCreateModal", function () {
+                $("#createModal").modal("hide");
+            });
+        });
+    </script>
+}
